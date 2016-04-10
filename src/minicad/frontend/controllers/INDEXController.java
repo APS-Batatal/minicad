@@ -6,54 +6,107 @@
 package minicad.frontend.controllers;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.ArcType;
+import javafx.scene.input.MouseEvent;
+import minicad.DrawningCanvas;
+import minicad.Status;
+import minicad.enums.Formas;
+import minicad.utils.Point;
 
 /**
  *
  * @author Diego
  */
 public class INDEXController implements Initializable {
-    
+
     @FXML
     private Canvas canvas;
+    private DrawningCanvas dCanvas;
     @FXML
-    private Label status;
+    private Label statusLabel;
+    private Status status;
+    @FXML
+    private Button lineBtn;
+    @FXML
+    private ColorPicker backgroundColorPicker;
+    @FXML
+    private ColorPicker strokeColorPicker;
+    @FXML
+    private Label labelMousePos;
+    @FXML
+    private Button triangleBtn;
+    @FXML
+    private Button clearBtn;
     
+    private ArrayList<Button> buttons;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        status.setText("Oh não!");
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        draw(gc);
-    }    
-    private void draw(GraphicsContext gc){
-        gc.setFill(Color.GREEN);
-        gc.setStroke(Color.BLUE);
-        gc.setLineWidth(5);
-        gc.strokeLine(40, 10, 10, 40);
-        gc.fillOval(10, 60, 30, 30);
-        gc.strokeOval(60, 60, 30, 30);
-        gc.fillRoundRect(110, 60, 30, 30, 10, 10);
-        gc.strokeRoundRect(160, 60, 30, 30, 10, 10);
-        gc.fillArc(10, 110, 30, 30, 45, 240, ArcType.OPEN);
-        gc.fillArc(60, 110, 30, 30, 45, 240, ArcType.CHORD);
-        gc.fillArc(110, 110, 30, 30, 45, 240, ArcType.ROUND);
-        gc.strokeArc(10, 160, 30, 30, 45, 240, ArcType.OPEN);
-        gc.strokeArc(60, 160, 30, 30, 45, 240, ArcType.CHORD);
-        gc.strokeArc(110, 160, 30, 30, 45, 240, ArcType.ROUND);
-        gc.fillPolygon(new double[]{10, 40, 10, 40},
-                       new double[]{210, 210, 240, 240}, 4);
-        gc.strokePolygon(new double[]{60, 90, 60, 90},
-                         new double[]{210, 210, 240, 240}, 4);
-        gc.strokePolyline(new double[]{110, 140, 110, 140},
-                          new double[]{210, 210, 240, 240}, 4);
+        status = new Status(statusLabel);
+        dCanvas = new DrawningCanvas(canvas);
+        //dCanvas.draw();
+        buttons = new ArrayList<>();
+        buttons.add(lineBtn);
+        buttons.add(triangleBtn);
+        
+    }
+
+    @FXML
+    private void onLineBtnClick(MouseEvent event) {
+        dCanvas.setForma(Formas.LINHA);
+        lineBtn.setDisable(true);
+    }
+
+    @FXML
+    private void onTriangleBtnClick(ActionEvent event) {
+        dCanvas.setForma(Formas.TRIANGULO);
+        triangleBtn.setDisable(true);
+    }
+
+    @FXML
+    private void onClearBtnClick(ActionEvent event) {
+        dCanvas.clear();
+    }
+
+    @FXML
+    private void onCanvasMouseMove(MouseEvent event) {
+        dCanvas.setPosition(event.getX(), event.getY());
+        labelMousePos.setText("(X: " + dCanvas.getPosition().x + "; Y: " + dCanvas.getPosition().y + ")");
+    }
+
+    @FXML
+    private void onCanvasMouseClick(MouseEvent event) {
+        if (dCanvas.getForma() != null) {
+            dCanvas.setupPoint(); 
+            if(dCanvas.getNClicks()<= 0){
+                for(Button b: buttons){
+                    b.setDisable(false);
+                }
+            }
+        }
+    }
+
+    @FXML
+    private void onCanvasMouseExit(MouseEvent event) {
+        labelMousePos.setText("");
+    }
+
+    @FXML
+    private void onBackgroundColorPicker(ActionEvent event) {
+        dCanvas.setBackgroundColor(backgroundColorPicker.getValue());
+    }
+
+    @FXML
+    private void onStrokeColorPicker(ActionEvent event) {
+        dCanvas.setStrokeColor(strokeColorPicker.getValue());
     }
 }

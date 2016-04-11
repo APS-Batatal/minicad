@@ -19,6 +19,10 @@ public enum Formas {
         public String toString() {
             return "triangulo";
         }
+    },
+    POLYGON {
+       public String toString() {
+            return "polygon";
+        } 
     }
-
 }

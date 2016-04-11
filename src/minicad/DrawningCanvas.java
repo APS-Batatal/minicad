@@ -31,10 +31,10 @@ public class DrawningCanvas {
     public DrawningCanvas(Canvas canvas) {
         this.canvas = canvas;
         this.gc = canvas.getGraphicsContext2D();
-        this.gc.setFill(Color.WHITE);
-        this.gc.setStroke(Color.WHITE);
+        this.gc.setFill(Color.BLACK);
+        this.gc.setStroke(Color.BLACK);
         this.position = new Point();
-        this.points = new ArrayList<Point>();
+        this.points = new ArrayList<>();
     }
 
     public void setPosition(double x, double y) {
@@ -67,6 +67,9 @@ public class DrawningCanvas {
 
     public int getNClicks() {
         return this.nClicks;
+    }
+    public void setNClicks(int n){
+        this.nClicks = n;
     }
 
     public void setupPoint() {
@@ -111,6 +114,8 @@ public class DrawningCanvas {
     }
 
     public void clear() {
+        this.clearForma();
+        this.clearPoints();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
 }

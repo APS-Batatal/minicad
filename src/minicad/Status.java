@@ -6,6 +6,7 @@
 package minicad;
 
 import javafx.scene.control.Label;
+import minicad.enums.Formas;
 
 /**
  *
@@ -21,5 +22,18 @@ public class Status{
     };
     public String getText(){
         return label.getText();
+    }
+    public void clear(){
+        label.setText("");
+    }
+    public void forma(Formas forma){
+        switch(forma){
+            case LINHA:
+                label.setText("Linha escolhida, são necessários 2 pontos");
+                break;
+            case TRIANGULO:
+                label.setText("Triângulo escolhido, são necessários 3 pontos");
+                break;
+        }
     }
 }

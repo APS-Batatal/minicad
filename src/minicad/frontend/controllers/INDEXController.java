@@ -7,6 +7,7 @@ package minicad.frontend.controllers;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +16,9 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import minicad.DrawningCanvas;
 import minicad.Status;
 import minicad.enums.Formas;
@@ -45,7 +48,9 @@ public class INDEXController implements Initializable {
     private Button triangleBtn;
     @FXML
     private Button clearBtn;
-    
+    @FXML
+    private Button polyBtn;
+
     private ArrayList<Button> buttons;
 
     @Override
@@ -57,23 +62,57 @@ public class INDEXController implements Initializable {
         buttons = new ArrayList<>();
         buttons.add(lineBtn);
         buttons.add(triangleBtn);
-        
+        buttons.add(polyBtn);
+        backgroundColorPicker.setValue(Color.BLACK);
+        strokeColorPicker.setValue(Color.BLACK);
     }
 
     @FXML
     private void onLineBtnClick(MouseEvent event) {
+        enableButtons();
         dCanvas.setForma(Formas.LINHA);
+        status.forma(Formas.LINHA);
         lineBtn.setDisable(true);
     }
 
     @FXML
     private void onTriangleBtnClick(ActionEvent event) {
+        enableButtons();
         dCanvas.setForma(Formas.TRIANGULO);
+        status.forma(Formas.TRIANGULO);
         triangleBtn.setDisable(true);
     }
 
     @FXML
+    private void onPolyBtnClick(ActionEvent event) {
+        enableButtons();
+        //dCanvas.setForma(Formas.TRIANGULO);
+        TextInputDialog dialog = new TextInputDialog("4");
+        dialog.setTitle("Polígono");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Número de vértices:");
+        Optional<String> result = dialog.showAndWait();
+
+        dCanvas.setForma(Formas.POLYGON);
+        polyBtn.setDisable(true);
+
+        if (result.isPresent()) {
+            int n;
+            try{
+                n = Integer.parseInt(result.get());
+                dCanvas.setNClicks(n);
+            } catch(Exception e){
+                status.setText("Número de vértices inválido");
+            }
+        } else {
+            enableButtons();
+            dCanvas.clear();
+        }
+    }
+
+    @FXML
     private void onClearBtnClick(ActionEvent event) {
+        enableButtons();
         dCanvas.clear();
     }
 
@@ -86,12 +125,16 @@ public class INDEXController implements Initializable {
     @FXML
     private void onCanvasMouseClick(MouseEvent event) {
         if (dCanvas.getForma() != null) {
-            dCanvas.setupPoint(); 
-            if(dCanvas.getNClicks()<= 0){
-                for(Button b: buttons){
-                    b.setDisable(false);
-                }
+            dCanvas.setupPoint();
+            if (dCanvas.getNClicks() <= 0) {
+                status.clear();
+                enableButtons();
+
+            } else {
+                status.setText("Faltam " + (dCanvas.getNClicks()) + " pontos");
             }
+        } else {
+            status.setText("Por favor, escolha uma opção!");
         }
     }
 
@@ -108,5 +151,12 @@ public class INDEXController implements Initializable {
     @FXML
     private void onStrokeColorPicker(ActionEvent event) {
         dCanvas.setStrokeColor(strokeColorPicker.getValue());
+    }
+
+    private void enableButtons() {
+        status.clear();
+        for (Button b : buttons) {
+            b.setDisable(false);
+        }
     }
 }

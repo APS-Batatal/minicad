@@ -7,13 +7,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minicad.frontend.controllers.INDEXController">
+<AnchorPane id="AnchorPane" maxHeight="400.0" maxWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minicad.frontend.controllers.INDEXController">
     <children>
-      <Pane layoutX="274.0" layoutY="24.0" prefHeight="376.0" prefWidth="560.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="24.0">
+      <AnchorPane AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Canvas id="dCanvas" fx:id="canvas" height="353.0" onMouseClicked="#onCanvasMouseClick" onMouseExited="#onCanvasMouseExit" onMouseMoved="#onCanvasMouseMove" width="490.0" />
          </children>
-      </Pane>
+      </AnchorPane>
       <MenuBar layoutX="309.0" layoutY="65.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -38,25 +38,45 @@
             <AnchorPane prefHeight="200.0" prefWidth="85.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="14.0" layoutY="6.0" text="Formas" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  <Button fx:id="lineBtn" mnemonicParsing="false" onMouseClicked="#onLineBtnClick" prefHeight="25.0" prefWidth="79.0" text="Linha" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
-                  <Button fx:id="triangleBtn" layoutY="51.0" mnemonicParsing="false" onAction="#onTriangleBtnClick" text="Triângulo" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#onClearBtnClick" text="Limpar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Button fx:id="lineBtn" mnemonicParsing="false" onMouseClicked="#onLineBtnClick" prefHeight="25.0" prefWidth="79.0" text="Linha" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
+                     <tooltip>
+                        <Tooltip text="Desenha uma linha" />
+                     </tooltip></Button>
+                  <Button fx:id="triangleBtn" layoutY="51.0" mnemonicParsing="false" onAction="#onTriangleBtnClick" text="Triângulo" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                     <tooltip>
+                        <Tooltip text="Desenha um triângulo" />
+                     </tooltip></Button>
+                  <Button fx:id="clearBtn" mnemonicParsing="false" onAction="#onClearBtnClick" text="Limpar" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <tooltip>
+                        <Tooltip text="Limpa a tela de desenho" />
+                     </tooltip></Button>
+                  <Button fx:id="polyBtn" layoutY="80.0" mnemonicParsing="false" onAction="#onPolyBtnClick" text="Polígono" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+                     <tooltip>
+                        <Tooltip text="Desenha um polígono" />
+                     </tooltip>
+                  </Button>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="-57.0" layoutY="162.0" prefHeight="115.0" prefWidth="85.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
-                  <ColorPicker fx:id="backgroundColorPicker" maxWidth="100.0" onAction="#onBackgroundColorPicker" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0" />
+                  <ColorPicker fx:id="backgroundColorPicker" maxWidth="100.0" onAction="#onBackgroundColorPicker" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                     <tooltip>
+                        <Tooltip text="Cor de fundo do desenho" />
+                     </tooltip></ColorPicker>
                   <Label text="Cores" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                   <Label layoutX="10.0" layoutY="10.0" text="Fundo" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
                   <Label layoutX="20.0" layoutY="20.0" text="Linha" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
-                  <ColorPicker fx:id="strokeColorPicker" layoutX="10.0" layoutY="10.0" maxWidth="100.0" onAction="#onStrokeColorPicker" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <ColorPicker fx:id="strokeColorPicker" layoutX="10.0" layoutY="10.0" maxWidth="100.0" onAction="#onStrokeColorPicker" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                     <tooltip>
+                        <Tooltip text="Cor da linha" />
+                     </tooltip></ColorPicker>
                </children>
             </AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="10.0" layoutY="445.0" prefHeight="31.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label fx:id="statusLabel" prefHeight="31.0" prefWidth="479.0" text="status" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="111.0" AnchorPane.topAnchor="0.0" />
+            <Label fx:id="statusLabel" prefHeight="31.0" prefWidth="479.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="111.0" AnchorPane.topAnchor="0.0" />
             <Label fx:id="labelMousePos" layoutX="524.0" layoutY="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>

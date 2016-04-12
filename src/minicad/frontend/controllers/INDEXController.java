@@ -31,7 +31,10 @@ public class INDEXController implements Initializable {
 
     @FXML
     private Canvas canvas;
+    @FXML
+    private Canvas canvasSRD;
     private DrawningCanvas dCanvas;
+    
     @FXML
     private Label statusLabel;
     private Status status;
@@ -56,7 +59,7 @@ public class INDEXController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
         status = new Status(statusLabel);
-        dCanvas = new DrawningCanvas(canvas);
+        dCanvas = new DrawningCanvas(canvas,canvasSRD);
         //dCanvas.draw();
         buttons = new ArrayList<>();
         buttons.add(lineBtn);

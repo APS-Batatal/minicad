@@ -16,10 +16,13 @@ import minicad.utils.Point;
  *
  * @author Diego
  */
-public class DrawningCanvas {
+public class DrawningCanvas{
 
     public Canvas canvas;
+    private Canvas subCanvas;
+    
     private GraphicsContext gc;
+    private GraphicsContext gc2;
 
     private Point position;
     private ArrayList<Point> points;
@@ -27,11 +30,19 @@ public class DrawningCanvas {
     private Formas forma;
     private int nClicks = 0;
 
-    public DrawningCanvas(Canvas canvas) {
+    public DrawningCanvas(Canvas canvas, Canvas subCanvas) {
         this.canvas = canvas;
+        this.subCanvas = subCanvas;
+        
         this.gc = canvas.getGraphicsContext2D();
+        this.gc2 = subCanvas.getGraphicsContext2D();
+        
         this.gc.setFill(Color.BLACK);
         this.gc.setStroke(Color.BLACK);
+        
+        this.gc2.setFill(Color.BLACK);
+        this.gc2.setStroke(Color.BLACK);
+        
         this.position = new Point();
         this.points = new ArrayList<>();
     }
@@ -72,7 +83,9 @@ public class DrawningCanvas {
     }
 
     public void setupPoint() {
-        this.points.add(new Point(this.position.x, this.position.y));
+        Point p = new Point(this.position.x, this.position.y);
+        gc.fillRect(p.x, p.y, 2, 2);
+        this.points.add(p);
         this.nClicks--;
         if(this.nClicks <= 0){
             this.draw();
@@ -85,11 +98,12 @@ public class DrawningCanvas {
 
     public void setBackgroundColor(Color color) {
         gc.setFill(color);
-
+        gc2.setFill(color);
     }
 
     public void setStrokeColor(Color color) {
         gc.setStroke(color);
+        gc2.setStroke(color);
     }
 
     public void draw() {
@@ -107,6 +121,22 @@ public class DrawningCanvas {
 
         gc.fillPolygon(xPoints, yPoints, this.points.size());
         gc.strokePolygon(xPoints, yPoints, this.points.size());
+        
+        ArrayList<Double> srdXList = new ArrayList<>();
+        ArrayList<Double> srdYList = new ArrayList<>();
+        
+        for(int i = 0; i < xPoints.length; i++){
+            double x = (xPoints[i] * subCanvas.getWidth())/ canvas.getWidth();
+            srdXList.add(x);
+            double y = (yPoints[i] * subCanvas.getHeight())/ canvas.getHeight();
+            srdYList.add(y);
+        }
+        
+        double[] srdXPoints = srdXList.stream().mapToDouble(d -> d).toArray();
+        double[] srdYPoints = srdYList.stream().mapToDouble(d -> d).toArray();
+        
+        gc2.fillPolygon(srdXPoints, srdYPoints, this.points.size());
+        gc2.strokePolygon(srdXPoints, srdYPoints, this.points.size());
 
         this.clearPoints();
         this.clearForma();
@@ -116,5 +146,6 @@ public class DrawningCanvas {
         this.clearForma();
         this.clearPoints();
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc2.clearRect(0, 0, subCanvas.getWidth(), subCanvas.getHeight());
     }
 }

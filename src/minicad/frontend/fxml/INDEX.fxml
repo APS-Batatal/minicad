@@ -10,34 +10,12 @@
 
 <AnchorPane id="AnchorPane" maxHeight="440.0" maxWidth="640.0" prefHeight="440.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minicad.frontend.controllers.INDEXController">
     <children>
-      <AnchorPane layoutY="25.0" prefHeight="393.0" prefWidth="530.0" style="-fx-border-color: black; -fx-border-width: 5px;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="35.0">
+      <AnchorPane layoutY="25.0" style="-fx-border-color: black; -fx-border-width: 5px;" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="120.0" AnchorPane.topAnchor="15.0">
          <children>
-            <Canvas id="dCanvas" fx:id="canvas" height="353.0" onMouseClicked="#onCanvasMouseClick" onMouseExited="#onCanvasMouseExit" onMouseMoved="#onCanvasMouseMove" width="490.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Canvas id="dCanvas" fx:id="canvas" height="353.0" onMouseClicked="#onCanvasMouseClick" onMouseExited="#onCanvasMouseExit" onMouseMoved="#onCanvasMouseMove" width="510.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
       </AnchorPane>
-      <MenuBar layoutX="309.0" layoutY="65.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <AnchorPane layoutY="27.0" maxWidth="110.0" prefWidth="110.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane layoutY="27.0" maxWidth="110.0" prefWidth="110.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="85.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -85,6 +63,11 @@
          <children>
             <Label fx:id="statusLabel" layoutX="10.0" prefWidth="479.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0" />
             <Label fx:id="labelMousePos" layoutX="524.0" layoutY="6.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="420.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="10.0" layoutY="35.0" style="-fx-border-color: black; -fx-border-width: 5px;" AnchorPane.rightAnchor="10.0">
+         <children>
+            <Canvas id="dCanvas" fx:id="canvasSRD" height="80.0" width="90.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
          </children>
       </AnchorPane>
     </children>

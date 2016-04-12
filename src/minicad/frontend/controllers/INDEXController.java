@@ -22,7 +22,6 @@ import javafx.scene.paint.Color;
 import minicad.DrawningCanvas;
 import minicad.Status;
 import minicad.enums.Formas;
-import minicad.utils.Point;
 
 /**
  *
@@ -114,6 +113,7 @@ public class INDEXController implements Initializable {
     private void onClearBtnClick(ActionEvent event) {
         enableButtons();
         dCanvas.clear();
+        status.setText("Tela de desenho limpa.");
     }
 
     @FXML

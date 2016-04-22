@@ -95,14 +95,18 @@ public class INDEXController implements Initializable {
         dialog.setContentText("Número de vértices:");
         Optional<String> result = dialog.showAndWait();
 
-        dCanvas.setForma(Formas.POLYGON);
-        polyBtn.setDisable(true);
 
         if (result.isPresent()) {
             int n;
             try{
                 n = Integer.parseInt(result.get());
-                dCanvas.setNClicks(n);
+                if(n <= 0){
+                    status.setText("Número de vértices inválido");  
+                } else {
+                    dCanvas.setForma(Formas.POLYGON);
+                    dCanvas.setNClicks(n);
+                    polyBtn.setDisable(true);
+                }
             } catch(Exception e){
                 status.setText("Número de vértices inválido");
             }

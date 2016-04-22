@@ -93,7 +93,7 @@ public class DrawningCanvas{
     }
 
     public void clearPoints() {
-        this.points = new ArrayList<Point>();
+        this.points = new ArrayList<>();
     }
 
     public void setBackgroundColor(Color color) {

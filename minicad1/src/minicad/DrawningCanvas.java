@@ -89,6 +89,7 @@ public class DrawningCanvas{
         this.nClicks--;
         if(this.nClicks <= 0){
             this.draw();
+            this.setForma(this.forma);
         }
     }
 

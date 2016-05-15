@@ -13,7 +13,25 @@ public enum EForms {
     LINE {
         @Override
         public String toString() {
-            return "line";
+            return "LINE";
+        }
+    },
+    TRIANGLE {
+        @Override
+        public String toString() {
+            return "TRIANGLE";
+        }
+    },
+    RECTANGLE {
+        @Override
+        public String toString() {
+            return "RECTANGLE";
+        }
+    },
+    CIRCLE {
+        @Override
+        public String toString() {
+            return "CIRCLE";
         }
     }
 }

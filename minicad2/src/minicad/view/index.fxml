@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minicad.controller.Index">
+<AnchorPane id="AnchorPane" fx:id="indexPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minicad.controller.Index">
    <children>
       <Pane layoutX="553.0" layoutY="33.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-width: 1px; -fx-border-color: black;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -30,8 +30,11 @@
       </Pane>
       <Pane layoutX="-71.0" layoutY="4.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="700.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="lineBtn" layoutX="24.0" layoutY="18.0" mnemonicParsing="false" onAction="#onLineBtnClick" text="Linha" />
+            <Button fx:id="lineBtn" layoutX="10.0" layoutY="21.0" mnemonicParsing="false" onAction="#onLineBtnClick" prefWidth="80.0" text="Linha" />
             <Button fx:id="manualBtn" layoutX="18.0" layoutY="561.0" mnemonicParsing="false" onAction="#onManualBtnClick" text="Manual" />
+            <Button fx:id="triangleBtn" layoutX="10.0" layoutY="50.0" mnemonicParsing="false" onAction="#onTriangleBtnClick" prefWidth="80.0" text="Triângulo" />
+            <Button fx:id="rectBtn" layoutX="10.0" layoutY="79.0" mnemonicParsing="false" onAction="#onRectBtnClick" prefWidth="80.0" text="Retângulo" />
+            <Button fx:id="circleBtn" layoutX="10.0" layoutY="108.0" mnemonicParsing="false" onAction="#onCircleBtnClick" prefWidth="80.0" text="Círculo" />
          </children>
       </Pane>
    </children>

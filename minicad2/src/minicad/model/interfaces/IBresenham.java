@@ -6,6 +6,7 @@
 package minicad.model.interfaces;
 
 import java.util.ArrayList;
+import minicad.Helpers.Point;
 
 /**
  *
@@ -15,11 +16,10 @@ public interface IBresenham {
 
     /**
      *
-     * @param xi O x inicial para a linha
-     * @param yi O i inicial para a linha
-     * @param xf O x final para a linha
-     * @param yf O y final para a linha
+     * @param pi O ponto inicial da linha
+     * @param pf O ponto final da linha
      * @return Um array com os pontos da linha
      */
-    public ArrayList<Integer> findLine();
+    public ArrayList<Point> findLine(Point pi, Point pf);
+    public void setPlot();
 }

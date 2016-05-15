@@ -24,7 +24,9 @@ public class DrawingCanvas {
     private double x, y, width, height = 0;
 
     private EForms choice;
-    public int nClicks = 0;
+    private ArrayList<Point> points;
+    public int nPoints = 0;
+    public int formPoints = 0;
     private Form actualForm = null;
 
     private ArrayList<Form> drawList = new ArrayList<>();
@@ -39,10 +41,10 @@ public class DrawingCanvas {
         //The canvas drawning loop
         new AnimationTimer() {
             @Override
-            public void handle(long now) {                
+            public void handle(long now) {
                 clear();
                 cross();
-                
+
                 //for each form in drawlist
                 for (int i = 0; i < drawList.size(); i++) {
                     Form form = drawList.get(i);//get the form
@@ -56,12 +58,14 @@ public class DrawingCanvas {
 
         }.start();
     }
-    private void clear(){
+
+    private void clear() {
         gc.setFill(Color.WHITE);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.BLACK);
     }
-    private void cross(){
+
+    private void cross() {
         gc.fillRect(x, 0, 1, canvas.getHeight());
         gc.fillRect(0, y, canvas.getWidth(), 1);
     }
@@ -72,10 +76,27 @@ public class DrawingCanvas {
             return;
         }
         this.choice = form;
+        this.points = new ArrayList<>();
         switch (this.choice) {
             case LINE:
-                this.nClicks = 2;
+                this.nPoints = 2;
+                this.formPoints = 2;
                 this.actualForm = new Line();
+                break;
+            case TRIANGLE:
+                this.nPoints = 3;
+                this.formPoints = 3;
+                this.actualForm = new Triangle();
+                break;
+            case RECTANGLE:
+                this.nPoints = 2;
+                this.formPoints = 2;
+                this.actualForm = new Rect();
+                break;
+            case CIRCLE:
+                this.nPoints = 2;
+                this.formPoints = 2;
+                this.actualForm = new Circle();
                 break;
         }
     }
@@ -90,15 +111,39 @@ public class DrawingCanvas {
     }
 
     public void onClick() {
-        this.nClicks--;
+        this.nPoints--;
         if (this.actualForm != null) {
-            this.actualForm.AddPoint(getPosition());
-            if (this.nClicks <= 0) {
-                actualForm.findLine();
-                drawList.add(actualForm);
-                this.choice = null;
-                this.actualForm = null;
+            //this.actualForm.AddPoint(getPosition());
+            this.points.add(getPosition());
+            if (this.nPoints <= 0) {
+                setPoints(this.points);
+                create();
             }
+        }
+    }
+
+    public void setPoints(ArrayList<Point> points) {
+        if (this.actualForm != null) {
+            for (Point point : points) {
+                this.actualForm.AddPoint(point);
+            }
+            create();
+        }
+    }
+
+    public void clearPoints() {
+        this.points = new ArrayList<>();
+        this.nPoints = this.formPoints;
+    }
+
+    private void create() {
+        if (actualForm != null) {
+            actualForm.setPlot();
+            drawList.add(actualForm);
+            this.choice = null;
+            this.actualForm = null;
+            this.nPoints = 0;
+            this.formPoints = 0;
         }
     }
 }

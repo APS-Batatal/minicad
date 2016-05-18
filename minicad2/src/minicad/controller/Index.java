@@ -8,12 +8,15 @@ package minicad.controller;
 import minicad.model.InputDialog;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import minicad.model.DrawingCanvas;
@@ -51,6 +54,11 @@ public class Index implements Initializable {
     private Button rectBtn;
     @FXML
     private Button circleBtn;
+    
+    //TODO: fazer
+    @FXML
+    private ListView<String> list;
+    private ObservableList<String> listItems = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -62,6 +70,11 @@ public class Index implements Initializable {
 
         //desabilitar o manualBtn (por default)
         manualBtn.setDisable(true);
+        
+        listItems.add("teste");
+        listItems.add("teste");
+        listItems.add("teste");
+        list.setItems(listItems);
     }
 
     @FXML

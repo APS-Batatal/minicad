@@ -10,11 +10,6 @@
 
 <AnchorPane id="AnchorPane" fx:id="indexPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minicad.controller.Index">
    <children>
-      <Pane layoutX="553.0" layoutY="33.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-width: 1px; -fx-border-color: black;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
-         <children>
-            <Canvas fx:id="canvas" height="550.0" onMouseClicked="#onCanvasClick" onMouseExited="#onMouseOut" onMouseMoved="#onCanvasMove" style="-fx-cursor: crosshair;" width="700.0" />
-         </children>
-      </Pane>
       <Pane layoutX="109.0" layoutY="473.0" style="-fx-border-width: 1px; -fx-border-color: black;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="560.0">
          <children>
             <Label fx:id="status" prefHeight="30.0" prefWidth="572.0">
@@ -35,6 +30,16 @@
             <Button fx:id="triangleBtn" layoutX="10.0" layoutY="50.0" mnemonicParsing="false" onAction="#onTriangleBtnClick" prefWidth="80.0" text="Triângulo" />
             <Button fx:id="rectBtn" layoutX="10.0" layoutY="79.0" mnemonicParsing="false" onAction="#onRectBtnClick" prefWidth="80.0" text="Retângulo" />
             <Button fx:id="circleBtn" layoutX="10.0" layoutY="108.0" mnemonicParsing="false" onAction="#onCircleBtnClick" prefWidth="80.0" text="Círculo" />
+         </children>
+      </Pane>
+      <Pane layoutX="100.0" layoutY="10.0" style="-fx-border-color: black;">
+         <children>
+            <Canvas fx:id="canvas" height="540.0" layoutX="2.0" layoutY="1.0" onMouseClicked="#onCanvasClick" onMouseExited="#onMouseOut" onMouseMoved="#onCanvasMove" style="-fx-cursor: crosshair;" width="496.0" />
+         </children>
+      </Pane>
+      <Pane AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <children>
+            <ListView fx:id="list" fixedCellSize="0.0" prefHeight="543.0" prefWidth="180.0" />
          </children>
       </Pane>
    </children>

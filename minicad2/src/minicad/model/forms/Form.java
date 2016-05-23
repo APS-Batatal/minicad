@@ -3,29 +3,65 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package minicad.model;
+package minicad.model.forms;
 
 import java.util.ArrayList;
+import javafx.scene.paint.Color;
 import minicad.Helpers.Point;
 import minicad.model.enums.EForms;
 import minicad.model.interfaces.IBresenham;
+import minicad.model.enums.ESides;
 
 /**
  *
  * @author Diego
  */
-public abstract class Form implements IBresenham{
-    
-    public EForms type;
+public abstract class Form implements IBresenham {
+
     public ArrayList<Point> points = new ArrayList<>();
     public ArrayList<Point> plotPoints = new ArrayList<>();
     
-    public void AddPoint(Point point){
+    public EForms type;
+    public Color color;
+    
+
+    public void AddPoint(Point point) {
         points.add(point);
     }
     
+    public void clear(){
+        this.plotPoints = new ArrayList<>();
+    }
+
+    public void reflect(ESides side) {
+        for (int i = 0; i < this.points.size(); i++) {
+            Point p = this.points.get(i);
+
+            switch (side) {
+                case HORIZONTAL:
+                    p.x = -p.x;
+                    break;
+                case VERTICAL:
+                    p.y = -p.y;
+                    break;
+            }
+            this.points.set(i, p);
+        }
+        setPlot();
+    }
+
+    public void scale(double factor) {
+        for (int i = 0; i < this.points.size(); i++) {
+            Point p = this.points.get(i);
+            p.x *= factor;
+            p.y *= factor;
+            this.points.set(i, p);
+        }
+        setPlot();
+    }
+
     @Override
-    public ArrayList<Point> findLine(Point pi, Point pf){
+    public ArrayList<Point> findLine(Point pi, Point pf) {
         ArrayList<Point> resultPoints = new ArrayList<>();
 
         int x = (int) pi.x;

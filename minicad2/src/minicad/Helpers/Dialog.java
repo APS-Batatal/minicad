@@ -18,25 +18,26 @@ import minicad.Main;
  */
 public abstract class Dialog {
 
-    protected Stage dialog;
+    protected Stage stage;
     protected FXMLLoader loader;
 
     public Dialog(String name, String fxml) {
-        dialog = new Stage();
+        stage = new Stage();
         loader = new FXMLLoader(Main.class.getResource("view/" + fxml + ".fxml"));
         //Parent root = (Parent)loader.load();
         Parent root;
         try {
             root = (Parent) loader.load();
             //root = FXMLLoader.load(Main.class.getResource("view/" + fxml + ".fxml"));
-            dialog.setScene(new Scene(root));
-            dialog.setTitle(name);
-            dialog.initModality(Modality.WINDOW_MODAL);
+            stage.setScene(new Scene(root));
+            stage.setTitle(name);
+            stage.initModality(Modality.WINDOW_MODAL);
         } catch (Exception e) {
         }
     }
+    
 
     public void show() {
-        dialog.showAndWait();
+        stage.showAndWait();
     }
 }

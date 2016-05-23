@@ -5,22 +5,28 @@ package minicad.controller;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import minicad.model.InputDialog;
+import minicad.model.dialog.InputDialog;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import minicad.Helpers.Point;
 import minicad.model.DrawingCanvas;
+import minicad.model.FormList;
 import minicad.model.enums.EForms;
+import minicad.model.enums.ESides;
+import minicad.model.dialog.ReflectDialog;
+import minicad.model.dialog.ScaleDialog;
+import minicad.model.enums.ETransforms;
 
 /**
  *
@@ -28,131 +34,173 @@ import minicad.model.enums.EForms;
  */
 public class Index implements Initializable {
 
+    //VARIÁVEIS
+    @FXML
+    private AnchorPane indexPane;//Container principal
+
     @FXML
     private Canvas canvas;
-    private DrawingCanvas dCanvas;
-
-    private EForms choice;
-    private EForms prevChoice;
+    private DrawingCanvas dCanvas;//canvas de desenho
+    private EForms choice;//variável para a forma escolhida
+    private EForms prevChoice;//variável para a escolha anterior
 
     @FXML
     private Label status;
     @FXML
-    private Button lineBtn;
-    @FXML
-    private Button manualBtn;
-    @FXML
-    private Label mouseLbl;
+    private Label mouseLbl;//label que indicará a posição do mouse
 
-    //InputDialog manualDialog;
-    InputDialog manualDialog;
     @FXML
-    private AnchorPane indexPane;
+    private Button lineBtn;//botão de linha
     @FXML
-    private Button triangleBtn;
+    private Button triangleBtn;//Botão de triângulo
     @FXML
-    private Button rectBtn;
+    private Button rectBtn;//Botão de retângulo
     @FXML
-    private Button circleBtn;
-    
+    private Button circleBtn;//Botão de Círculo
+
+    @FXML
+    private Button manualBtn;//botão de entrada manual
+    InputDialog manualDialog;//Diálogo de entrada manual
+
     //TODO: fazer
     @FXML
-    private ListView<String> list;
-    private ObservableList<String> listItems = FXCollections.observableArrayList();
+    private ListView<String> list;//Lista de desenhos
+    private FormList formList;//Controlador da lista de desenhos
+    @FXML
+    private ColorPicker colorPicker;
+    @FXML
+    private Button reflectBtn;
+    @FXML
+    private Button scaleBtn;
 
+    //LISTENERS
+    //Ao iniciar
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //criar um novo DrawingCanvas
-        dCanvas = new DrawingCanvas(canvas);
+        dCanvas = new DrawingCanvas(canvas);//Criar um novo controlador DrawingCanvas
+        manualDialog = new InputDialog();//Criar um novo Diálogo (para input por texto) 
+        formList = new FormList(list);//Criar um novo controlador da lista
 
-        //manualDialog = new Dialog("Entrada Manual", "Entre com valor de (x,y)");
-        manualDialog = new InputDialog();
-
-        //desabilitar o manualBtn (por default)
-        manualBtn.setDisable(true);
+        colorPicker.setValue(Color.BLACK);
         
-        listItems.add("teste");
-        listItems.add("teste");
-        listItems.add("teste");
-        list.setItems(listItems);
+        manualBtn.setDisable(true);//desabilitar o manualBtn (por default)
+        reflectBtn.setDisable(true);//desabilitar o reflectBtn (por default)
+        scaleBtn.setDisable(true);//desabilitar o scaleBtn (por default)
     }
 
+    //Ao clicar no botão de linha
     @FXML
     private void onLineBtnClick(ActionEvent event) {
-        createForm(EForms.LINE);
+        createForm(EForms.LINE);//Criar linha
     }
 
+    //Ao clicar no botão de Triângulo
     @FXML
     private void onTriangleBtnClick(ActionEvent event) {
-        createForm(EForms.TRIANGLE);
+        createForm(EForms.TRIANGLE);//Criar triângulo
     }
 
+    //Ao clicar no botão de retângulo
     @FXML
     private void onRectBtnClick(ActionEvent event) {
-        createForm(EForms.RECTANGLE);
+        createForm(EForms.RECTANGLE);//Criar Retângulo
     }
 
+    //Ao clicar no botão de círculo
     @FXML
     private void onCircleBtnClick(ActionEvent event) {
-        System.out.println("Aqui será o círculo");
+        createForm(EForms.CIRCLE);//Criar Círculo
     }
 
+    //Ao clicar no botão de entrada manual
     @FXML
     private void onManualBtnClick(ActionEvent event) {
-        //TODO: abrir menu para entar com os valores por meio de texto
-        indexPane.setDisable(true);
-        dCanvas.clearPoints();
-        manualDialog.show(dCanvas.nPoints);
+        indexPane.setDisable(true);//travar a janela principal        
+        dCanvas.clearPoints();//limpar pontos do canvas de desenho
+        manualDialog.show(dCanvas.nPoints);//Exibir diálogo de entrada de pontos
+
+        //varificar se o diálogo de entrada manual retornou o número necessário de pontos
         if (dCanvas.nPoints == manualDialog.getPoints().size()) {
-            dCanvas.setPoints(manualDialog.getPoints());
-            check();
+            dCanvas.setPoints(manualDialog.getPoints());//setar os pontos para o canvas de desenho
+            checkPoints();//chamar a checagem de pontos
+            formList.add(dCanvas.getForm());
         }
-        indexPane.setDisable(false);
+        indexPane.setDisable(false);//reativar a janela principal
+    }
+    
+    @FXML
+    private void onListClick(MouseEvent event) {
+        formList.get(list.getSelectionModel().getSelectedIndex());
+        reflectBtn.setDisable(false);
+        scaleBtn.setDisable(false);
     }
 
+    @FXML
+    private void onColorSet(ActionEvent event) {
+        dCanvas.setColor(colorPicker.getValue());
+    }
+
+    @FXML
+    private void onReflectBtnClick(ActionEvent event) {
+       formList.reflect(new ReflectDialog().show());
+    }
+
+    @FXML
+    private void onScaleBtnClick(ActionEvent event) {
+        double factor = new ScaleDialog().show();
+        if(factor > 0){
+            formList.scale(factor);            
+        } else {
+            status.setText("Escala Inválida");
+        }
+    }
+
+    //Ao clicar no canvas
     @FXML
     private void onCanvasClick(MouseEvent event) {
-        //Ao clicar no canvas
-        dCanvas.onClick();
-
-        //verificar se há pontos para desenhar
-        check();
+        dCanvas.onClick();//chamar evento de click do canvas de desenho
+        checkPoints();//verificar se há pontos para desenhar
     }
 
+    //Ao mover o mouse no canvas
     @FXML
     private void onCanvasMove(MouseEvent event) {
-        //ao movimentar o canvas
-        dCanvas.setPosition(event.getX(), event.getY());
-        mouseLbl.setText("( x: " + Math.round(event.getX()) + " , y: " + Math.round(event.getY()) + " )");
+        Point p = new Point(event.getX(), event.getY());//criar um ponto com as coordenadas do mouse
+        dCanvas.setPosition(p);//Atualizar a posição no canvas de desenho
+        mouseLbl.setText("( x: " + ((int) p.x) + " , y: " + ((int) p.y) + " )");//atualizar texto
     }
 
+    //Ao tirar o mouse do canvas
     @FXML
     private void onMouseOut(MouseEvent event) {
-        mouseLbl.setText(null);
+        mouseLbl.setText(null);//apagar texto
     }
 
+    //METÓDOS
+    //Criar forma
     private void createForm(EForms form) {
+        //verificar se há uma escolha
         if (this.choice != form) {
-
-            this.choice = form;
-            this.prevChoice = form;
-
-            dCanvas.AddForm(this.choice);
+            this.choice = form;//atualizar escolha
+            this.prevChoice = form;//atualizar escolha
+            dCanvas.AddForm(this.choice);//adicionar forma no canvas de desenho
             manualBtn.setDisable(false);//habilitar entrada manual
         }
     }
 
-    private void check() {
-        if (dCanvas.nPoints <= 0) {
-            //senão houver
-            //desabilitar botões de ação
-            //lineBtn.setDisable(false);
-
-            manualBtn.setDisable(true);//desabilitar botão de entrada manual
-
+    //Checar pontos
+    private void checkPoints() {
+        //Senão houver mais pontos para desenhar
+        if (dCanvas.nPoints <= 0 && this.choice != null) {
+            //Se a escolha anterior for a mesma que a atual
+            formList.add(dCanvas.getForm());
+            //list.getSelectionModel().select(formList.size() - 1);
+            dCanvas.clearSelection();
             if (this.prevChoice == this.choice) {
-                dCanvas.AddForm(this.choice);
-                manualBtn.setDisable(false);
+                dCanvas.AddForm(this.choice);//continuar adicionando
+                manualBtn.setDisable(false);//reabilitar botão de entrada manual
+            } else {
+                manualBtn.setDisable(true);//desabilitar botão de entrada manual                
             }
         }
     }

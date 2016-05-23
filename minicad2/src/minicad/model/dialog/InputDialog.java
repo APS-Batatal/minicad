@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package minicad.model;
+package minicad.model.dialog;
 
 import java.util.ArrayList;
 import minicad.Helpers.Dialog;
@@ -22,7 +22,7 @@ public class InputDialog extends Dialog {
     public InputDialog() {
         super("Entrada Manual", "input");
         controller = (Input) loader.getController();
-        controller.setupStage(dialog);
+        controller.setupStage(stage);
     }
 
     public void show(int npoints) {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package minicad.model;
+package minicad.model.forms;
 
 import java.util.ArrayList;
 import minicad.Helpers.Point;
@@ -25,11 +25,13 @@ public class Triangle extends Form {
     }
 
     public Triangle() {
+        this.type = EForms.TRIANGLE;
         this.points = new ArrayList<>(3);
     }
 
     @Override
     public void setPlot() {
+        this.clear();
         this.plotPoints.addAll(findLine(this.points.get(0), this.points.get(1)));
         this.plotPoints.addAll(findLine(this.points.get(1), this.points.get(2)));
         this.plotPoints.addAll(findLine(this.points.get(2), this.points.get(0)));

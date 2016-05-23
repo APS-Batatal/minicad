@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package minicad.model;
+package minicad.model.forms;
 
 import java.util.ArrayList;
 import minicad.Helpers.Point;
@@ -24,6 +24,7 @@ public class Line extends Form {
     }
 
     public Line() {
+        this.type = EForms.LINE;
         this.points = new ArrayList<>(2);
     }
 

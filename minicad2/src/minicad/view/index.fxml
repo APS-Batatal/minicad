@@ -30,6 +30,9 @@
             <Button fx:id="triangleBtn" layoutX="10.0" layoutY="50.0" mnemonicParsing="false" onAction="#onTriangleBtnClick" prefWidth="80.0" text="Triângulo" />
             <Button fx:id="rectBtn" layoutX="10.0" layoutY="79.0" mnemonicParsing="false" onAction="#onRectBtnClick" prefWidth="80.0" text="Retângulo" />
             <Button fx:id="circleBtn" layoutX="10.0" layoutY="108.0" mnemonicParsing="false" onAction="#onCircleBtnClick" prefWidth="80.0" text="Círculo" />
+            <ColorPicker fx:id="colorPicker" layoutX="10.0" layoutY="257.0" onAction="#onColorSet" prefWidth="80.0" />
+            <Button fx:id="reflectBtn" layoutX="10.0" layoutY="165.0" mnemonicParsing="false" onAction="#onReflectBtnClick" prefWidth="80.0" text="Refletir" />
+            <Button fx:id="scaleBtn" layoutX="10.0" layoutY="194.0" mnemonicParsing="false" onAction="#onScaleBtnClick" prefWidth="80.0" text="Escalonar" />
          </children>
       </Pane>
       <Pane layoutX="100.0" layoutY="10.0" style="-fx-border-color: black;">
@@ -39,7 +42,7 @@
       </Pane>
       <Pane AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
          <children>
-            <ListView fx:id="list" fixedCellSize="0.0" prefHeight="543.0" prefWidth="180.0" />
+            <ListView fx:id="list" fixedCellSize="0.0" onMouseClicked="#onListClick" prefHeight="543.0" prefWidth="180.0" />
          </children>
       </Pane>
    </children>

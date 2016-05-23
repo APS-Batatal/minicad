@@ -5,6 +5,11 @@
  */
 package minicad.model;
 
+import minicad.model.forms.Rect;
+import minicad.model.forms.Triangle;
+import minicad.model.forms.Line;
+import minicad.model.forms.Form;
+import minicad.model.forms.Circle;
 import java.util.ArrayList;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
@@ -29,6 +34,8 @@ public class DrawingCanvas {
     public int formPoints = 0;
     private Form actualForm = null;
 
+    private Color color = Color.BLACK;
+
     private ArrayList<Form> drawList = new ArrayList<>();
 
     public DrawingCanvas(Canvas canvas) {
@@ -49,8 +56,10 @@ public class DrawingCanvas {
                 for (int i = 0; i < drawList.size(); i++) {
                     Form form = drawList.get(i);//get the form
                     //For each point in the current form
+                    gc.setFill(form.color);
                     for (int k = 0; k < form.plotPoints.size(); k++) {
                         Point p = form.plotPoints.get(k);//get the plot point
+                        //gc.setFill(p);
                         gc.fillRect(p.x, p.y, 1, 1); //plot the current point
                     }
                 }
@@ -68,6 +77,10 @@ public class DrawingCanvas {
     private void cross() {
         gc.fillRect(x, 0, 1, canvas.getHeight());
         gc.fillRect(0, y, canvas.getWidth(), 1);
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 
     public void AddForm(EForms form) {
@@ -101,9 +114,9 @@ public class DrawingCanvas {
         }
     }
 
-    public void setPosition(double x, double y) {
-        this.x = x;
-        this.y = y;
+    public void setPosition(Point p) {
+        this.x = p.x;
+        this.y = p.y;
     }
 
     public Point getPosition() {
@@ -138,12 +151,20 @@ public class DrawingCanvas {
 
     private void create() {
         if (actualForm != null) {
+            actualForm.color = this.color;
             actualForm.setPlot();
             drawList.add(actualForm);
-            this.choice = null;
-            this.actualForm = null;
-            this.nPoints = 0;
-            this.formPoints = 0;
         }
+    }
+
+    public Form getForm() {
+        return this.actualForm;
+    }
+
+    public void clearSelection() {
+        this.choice = null;
+        this.actualForm = null;
+        this.nPoints = 0;
+        this.formPoints = 0;
     }
 }

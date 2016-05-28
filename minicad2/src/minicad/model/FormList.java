@@ -30,16 +30,12 @@ public class FormList {
     public void add(Form form) {
         forms.add(form);
         this.refresh();
-        this.items.add(index + " - " + form.type.toString());
         this.index = forms.size() - 1;
+        this.items.add((index+1) + " - " + form.type.toString());
     }
 
-    public void scale(double factor) {
-        this.forms.get(this.index).scale(factor);
-    }
-
-    public void reflect(ESides side) {
-        this.forms.get(this.index).reflect(side);
+    public void scale(ESides side, double factor) {
+        this.forms.get(this.index).scale(side, factor);
     }
 
     public Form get(int index) {

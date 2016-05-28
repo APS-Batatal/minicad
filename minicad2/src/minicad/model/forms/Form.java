@@ -33,28 +33,14 @@ public abstract class Form implements IBresenham {
         this.plotPoints = new ArrayList<>();
     }
 
-    public void reflect(ESides side) {
+    public void scale(ESides side, double factor) {
         for (int i = 0; i < this.points.size(); i++) {
             Point p = this.points.get(i);
-
-            switch (side) {
-                case HORIZONTAL:
-                    p.x = -p.x;
-                    break;
-                case VERTICAL:
-                    p.y = -p.y;
-                    break;
+            if(side == ESides.HORIZONTAL){
+                p.x *= factor;
+            } else {
+                p.y *= factor;                
             }
-            this.points.set(i, p);
-        }
-        setPlot();
-    }
-
-    public void scale(double factor) {
-        for (int i = 0; i < this.points.size(); i++) {
-            Point p = this.points.get(i);
-            p.x *= factor;
-            p.y *= factor;
             this.points.set(i, p);
         }
         setPlot();

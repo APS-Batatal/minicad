@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
@@ -24,9 +25,7 @@ import minicad.model.DrawingCanvas;
 import minicad.model.FormList;
 import minicad.model.enums.EForms;
 import minicad.model.enums.ESides;
-import minicad.model.dialog.ReflectDialog;
 import minicad.model.dialog.ScaleDialog;
-import minicad.model.enums.ETransforms;
 
 /**
  *
@@ -66,12 +65,14 @@ public class Index implements Initializable {
     @FXML
     private ListView<String> list;//Lista de desenhos
     private FormList formList;//Controlador da lista de desenhos
+    
     @FXML
     private ColorPicker colorPicker;
+    
     @FXML
-    private Button reflectBtn;
+    private Button scaleBtnX;
     @FXML
-    private Button scaleBtn;
+    private Button scaleBtnY;
 
     //LISTENERS
     //Ao iniciar
@@ -84,8 +85,8 @@ public class Index implements Initializable {
         colorPicker.setValue(Color.BLACK);
         
         manualBtn.setDisable(true);//desabilitar o manualBtn (por default)
-        reflectBtn.setDisable(true);//desabilitar o reflectBtn (por default)
-        scaleBtn.setDisable(true);//desabilitar o scaleBtn (por default)
+        scaleBtnX.setDisable(true);//desabilitar o scaleBtn (por default)
+        scaleBtnY.setDisable(true);//desabilitar o scaleBtn (por default)
     }
 
     //Ao clicar no botão de linha
@@ -131,8 +132,8 @@ public class Index implements Initializable {
     @FXML
     private void onListClick(MouseEvent event) {
         formList.get(list.getSelectionModel().getSelectedIndex());
-        reflectBtn.setDisable(false);
-        scaleBtn.setDisable(false);
+        scaleBtnX.setDisable(false);
+        scaleBtnY.setDisable(false);
     }
 
     @FXML
@@ -141,15 +142,16 @@ public class Index implements Initializable {
     }
 
     @FXML
-    private void onReflectBtnClick(ActionEvent event) {
-       formList.reflect(new ReflectDialog().show());
-    }
-
-    @FXML
     private void onScaleBtnClick(ActionEvent event) {
+        ESides side;
+        if("scaleBtnX".equals(((Control)event.getSource()).getId())){
+            side = ESides.HORIZONTAL;
+        } else {
+            side = ESides.VERTICAL;            
+        }
         double factor = new ScaleDialog().show();
-        if(factor > 0){
-            formList.scale(factor);            
+        if(factor > 0){;
+            formList.scale(side, factor);
         } else {
             status.setText("Escala Inválida");
         }

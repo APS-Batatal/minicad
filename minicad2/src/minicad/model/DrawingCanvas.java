@@ -140,7 +140,7 @@ public class DrawingCanvas {
             for (Point point : points) {
                 this.actualForm.AddPoint(point);
             }
-            create();
+            //create();
         }
     }
 

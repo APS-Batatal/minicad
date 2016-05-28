@@ -8,6 +8,7 @@ package minicad.model.forms;
 import java.util.ArrayList;
 import minicad.Helpers.Point;
 import minicad.model.enums.EForms;
+import minicad.model.enums.ESides;
 
 /**
  *
@@ -33,9 +34,9 @@ public class Circle extends Form {
         this.clear();
         Point p1 = this.points.get(0);
         Point p4 = this.points.get(1);
-        Point p2 = new Point(p4.x, p1.y);
-        Point p3 = new Point(p1.x, p4.y);
-        double r = Math.hypot(p4.x - p1.x, p4.y - p1.y);
+        //Point p2 = new Point(p4.x, p1.y);
+        //Point p3 = new Point(p1.x, p4.y);
+        double r = Point.distance(p4, p1);
         double x = -r, y = 0, err = 2 - 2 * r;//II. Quadrant
         do {
             this.plotPoints.add(new Point(p1.x - x, p1.y + y));//I. Quadrant
@@ -51,4 +52,14 @@ public class Circle extends Form {
             }
         } while (x < 0);
     }
+
+    @Override
+    public void scale(ESides side, double factor) {
+        //super.scale(side, factor); //To change body of generated methods, choose Tools | Templates.
+        //double distance = Point.distance(this.points.get(0), this.points.get(1));
+        //distance *= factor; 
+        this.points.get(1).x *= (factor);
+        this.setPlot();
+    }
+    
 }

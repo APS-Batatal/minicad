@@ -33,13 +33,13 @@ public class Rect extends Form {
         this.clear();
         Point p1 = this.points.get(0);
         Point p4 = this.points.get(1);
-        Point p2 = new Point(p4.x,p1.y);
-        Point p3 = new Point(p1.x,p4.y);
-        
+        Point p2 = new Point(p4.x, p1.y);
+        Point p3 = new Point(p1.x, p4.y);
+
         this.plotPoints.addAll(findLine(p1, p2));
         this.plotPoints.addAll(findLine(p2, p4));
         this.plotPoints.addAll(findLine(p4, p3));
         this.plotPoints.addAll(findLine(p3, p1));
-        
+
     }
 }

@@ -9,25 +9,25 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane id="AnchorPane" prefHeight="230.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minicad.controller.Input">
-   <children>
-      <Pane layoutX="100.0" prefHeight="150.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="150.0" prefWidth="200.0">
-               <content>
-                  <VBox fx:id="pane" prefHeight="200.0" prefWidth="200.0" />
-               </content>
-            </ScrollPane>
-         </children>
-      </Pane>
-      <Pane prefHeight="30.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0">
-         <children>
-            <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="8.0" prefHeight="17.0" prefWidth="172.0" />
-         </children>
-      </Pane>
-      <Pane layoutY="150.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <Button layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#onConfirmBtnClick" text="Confirmar" />
-         </children>
-      </Pane>
-   </children>
+    <children>
+        <Pane layoutX="100.0" prefHeight="150.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <ScrollPane fitToWidth="true" hbarPolicy="NEVER" prefHeight="150.0" prefWidth="200.0">
+                    <content>
+                        <VBox fx:id="pane" prefHeight="200.0" prefWidth="200.0" />
+                    </content>
+                </ScrollPane>
+            </children>
+        </Pane>
+        <Pane prefHeight="30.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0">
+            <children>
+                <Label fx:id="statusLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="8.0" prefHeight="17.0" prefWidth="172.0" />
+            </children>
+        </Pane>
+        <Pane layoutY="150.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <Button layoutX="66.0" layoutY="13.0" mnemonicParsing="false" onAction="#onConfirmBtnClick" text="Confirmar" />
+            </children>
+        </Pane>
+    </children>
 </AnchorPane>

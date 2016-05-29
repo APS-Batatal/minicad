@@ -30,7 +30,8 @@ public class InputDialog extends Dialog {
         super.show();
         this.points = controller.points;
     }
-    public ArrayList<Point> getPoints(){
+
+    public ArrayList<Point> getPoints() {
         return this.points;
     }
 }

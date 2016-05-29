@@ -32,12 +32,15 @@ public class Circle extends Form {
     @Override
     public void setPlot() {
         this.clear();
+        
         Point p1 = this.points.get(0);
         Point p4 = this.points.get(1);
-        //Point p2 = new Point(p4.x, p1.y);
-        //Point p3 = new Point(p1.x, p4.y);
+        
         double r = Point.distance(p4, p1);
         double x = -r, y = 0, err = 2 - 2 * r;//II. Quadrant
+        
+        this.plotPoints.addAll(this.findLine(p1, p4));
+        
         do {
             this.plotPoints.add(new Point(p1.x - x, p1.y + y));//I. Quadrant
             this.plotPoints.add(new Point(p1.x - y, p1.y - x));//II. Quadrant
@@ -55,11 +58,29 @@ public class Circle extends Form {
 
     @Override
     public void scale(ESides side, double factor) {
-        //super.scale(side, factor); //To change body of generated methods, choose Tools | Templates.
-        //double distance = Point.distance(this.points.get(0), this.points.get(1));
-        //distance *= factor; 
-        this.points.get(1).x *= (factor);
-        this.setPlot();
+        //TODO: Arrumar
+        //super.scale(side, factor);
+        this.clear();
+        
+        Point p1 = this.points.get(0);
+        Point p4 = this.points.get(1);
+        p4.x *= factor;
+        double r = Point.distance(p4, p1);
+        double x = -r, y = 0, err = 2 - 2 * r;//II. Quadrant
+        this.plotPoints.addAll(this.findLine(p1, p4));
+        do {
+            this.plotPoints.add(new Point(p1.x - x, p1.y + y));//I. Quadrant
+            this.plotPoints.add(new Point(p1.x - y, p1.y - x));//II. Quadrant
+            this.plotPoints.add(new Point(p1.x + x, p1.y - y));//III. Quadrant
+            this.plotPoints.add(new Point(p1.x + y, p1.y + x));//IV. Quadrant
+            r = err;
+            if (r <= y) {
+                err += ++y * 2 + 1;//e_xy+e_y < 0
+            }
+            if (r > x || err > y) {
+                err += ++x * 2 + 1;//e_xy+e_x > 0 or no 2nd y-step
+            }
+        } while (x < 0);
     }
-    
+
 }

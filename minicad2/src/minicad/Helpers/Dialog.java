@@ -35,7 +35,6 @@ public abstract class Dialog {
         } catch (Exception e) {
         }
     }
-    
 
     public void show() {
         stage.showAndWait();

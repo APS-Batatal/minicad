@@ -21,5 +21,6 @@ public interface IBresenham {
      * @return Um array com os pontos da linha
      */
     public ArrayList<Point> findLine(Point pi, Point pf);
+
     public void setPlot();
 }

@@ -91,7 +91,6 @@ public class Input implements Initializable {
         pane.getChildren().clear();
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

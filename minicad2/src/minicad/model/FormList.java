@@ -19,7 +19,7 @@ import minicad.model.forms.Form;
 public class FormList {
 
     private ListView list;
-    private int index;
+    public int index;
     private ObservableList<String> items = FXCollections.observableArrayList();
     private ArrayList<Form> forms = new ArrayList<>();
 
@@ -31,7 +31,14 @@ public class FormList {
         forms.add(form);
         this.refresh();
         this.index = forms.size() - 1;
-        this.items.add((index+1) + " - " + form.type.toString());
+        this.items.add((index + 1) + " - " + form.type.toString());
+        this.list.getSelectionModel().select(this.forms.size() - 1);
+    }
+
+    public void remove(int index) {
+        this.forms.remove(index);
+        this.items.remove(index);
+        list.refresh();
     }
 
     public void scale(ESides side, double factor) {
@@ -41,6 +48,11 @@ public class FormList {
     public Form get(int index) {
         this.index = index;
         return this.forms.get(index);
+    }
+
+    public Form get() {
+        this.index = this.list.getSelectionModel().getSelectedIndex();
+        return this.forms.get(this.index);
     }
 
     public int size() {

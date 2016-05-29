@@ -22,20 +22,21 @@ public class ScaleDialog {
         dialog.setHeaderText(null);
         dialog.setContentText("Entre com o fator de escalonamento");
     }
-    public double show(){
+
+    public double show() {
         Optional<String> num = dialog.showAndWait();
         double result = -1;
-        if(num.isPresent()){
-            try{
-                result = Double.parseDouble(num.get()); 
-                if(result > 0){
+        if (num.isPresent()) {
+            try {
+                result = Double.parseDouble(num.get());
+                if (result > 0) {
                     return result;
                 } else {
                     return -1;
                 }
-            } catch(Exception e){
+            } catch (Exception e) {
                 return -1;
-            }            
+            }
         } else {
             return result;
         }

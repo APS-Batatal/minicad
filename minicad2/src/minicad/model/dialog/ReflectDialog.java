@@ -17,27 +17,29 @@ import minicad.model.enums.ESides;
 public class ReflectDialog {
 
     ChoiceDialog<String> dialog;
+
     public ReflectDialog() {
-        
+
         ArrayList<String> choices = new ArrayList<>();
         choices.add(ESides.HORIZONTAL.toString());
         choices.add(ESides.VERTICAL.toString());
-        
+
         dialog = new ChoiceDialog<>(choices.get(0), choices);
         dialog.setTitle("Reflexo");
         dialog.setHeaderText(null);
         dialog.setContentText("Escolha o sentido");
     }
-    public ESides show(){
-        Optional<String> result =  dialog.showAndWait();
-        if(result.isPresent()){
-            if(result.get().equals(ESides.HORIZONTAL.toString())){
+
+    public ESides show() {
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()) {
+            if (result.get().equals(ESides.HORIZONTAL.toString())) {
                 return ESides.HORIZONTAL;
-            } else if(result.get().equals(ESides.VERTICAL.toString())){
+            } else if (result.get().equals(ESides.VERTICAL.toString())) {
                 return ESides.VERTICAL;
             }
         }
         return null;
     }
-    
+
 }

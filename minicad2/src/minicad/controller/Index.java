@@ -65,14 +65,16 @@ public class Index implements Initializable {
     @FXML
     private ListView<String> list;//Lista de desenhos
     private FormList formList;//Controlador da lista de desenhos
-    
+
     @FXML
     private ColorPicker colorPicker;
-    
+
     @FXML
     private Button scaleBtnX;
     @FXML
     private Button scaleBtnY;
+    @FXML
+    private Button deleteBtn;
 
     //LISTENERS
     //Ao iniciar
@@ -83,10 +85,12 @@ public class Index implements Initializable {
         formList = new FormList(list);//Criar um novo controlador da lista
 
         colorPicker.setValue(Color.BLACK);
-        
+
         manualBtn.setDisable(true);//desabilitar o manualBtn (por default)
         scaleBtnX.setDisable(true);//desabilitar o scaleBtn (por default)
         scaleBtnY.setDisable(true);//desabilitar o scaleBtn (por default)
+
+        deleteBtn.setDisable(true);//desabilitar o deleteBtn (por default)
     }
 
     //Ao clicar no botão de linha
@@ -116,24 +120,27 @@ public class Index implements Initializable {
     //Ao clicar no botão de entrada manual
     @FXML
     private void onManualBtnClick(ActionEvent event) {
-        indexPane.setDisable(true);//travar a janela principal        
+        indexPane.setDisable(true);//travar a janela principal
         dCanvas.clearPoints();//limpar pontos do canvas de desenho
         manualDialog.show(dCanvas.nPoints);//Exibir diálogo de entrada de pontos
-
-        //varificar se o diálogo de entrada manual retornou o número necessário de pontos
-        if (dCanvas.nPoints == manualDialog.getPoints().size()) {
+        //chamar a checagem de pontos
+        //verificar se o diálogo de entrada manual retornou o número necessário de pontos
+        if (manualDialog.getPoints().size() == dCanvas.nPoints) {
             dCanvas.setPoints(manualDialog.getPoints());//setar os pontos para o canvas de desenho
-            checkPoints();//chamar a checagem de pontos
+            dCanvas.create();
             formList.add(dCanvas.getForm());
+            checkPoints();
         }
         indexPane.setDisable(false);//reativar a janela principal
     }
-    
+
     @FXML
     private void onListClick(MouseEvent event) {
         formList.get(list.getSelectionModel().getSelectedIndex());
         scaleBtnX.setDisable(false);
         scaleBtnY.setDisable(false);
+
+        deleteBtn.setDisable(false);
     }
 
     @FXML
@@ -144,16 +151,28 @@ public class Index implements Initializable {
     @FXML
     private void onScaleBtnClick(ActionEvent event) {
         ESides side;
-        if("scaleBtnX".equals(((Control)event.getSource()).getId())){
+        if ("scaleBtnX".equals(((Control) event.getSource()).getId())) {
             side = ESides.HORIZONTAL;
         } else {
-            side = ESides.VERTICAL;            
+            side = ESides.VERTICAL;
         }
         double factor = new ScaleDialog().show();
-        if(factor > 0){;
+        if (factor > 0) {
             formList.scale(side, factor);
         } else {
             status.setText("Escala Inválida");
+        }
+    }
+
+    @FXML
+    private void onDeleteBtnClick(ActionEvent event) {
+        dCanvas.removeForm(formList.index);
+        formList.remove(formList.index);
+        int index = list.getSelectionModel().getSelectedIndex();
+        if (index >= 0) {
+            formList.get(list.getSelectionModel().getSelectedIndex());
+        } else {
+            deleteBtn.setDisable(true);
         }
     }
 
@@ -185,7 +204,7 @@ public class Index implements Initializable {
         if (this.choice != form) {
             this.choice = form;//atualizar escolha
             this.prevChoice = form;//atualizar escolha
-            dCanvas.AddForm(this.choice);//adicionar forma no canvas de desenho
+            dCanvas.addForm(this.choice);//adicionar forma no canvas de desenho
             manualBtn.setDisable(false);//habilitar entrada manual
         }
     }
@@ -196,10 +215,12 @@ public class Index implements Initializable {
         if (dCanvas.nPoints <= 0 && this.choice != null) {
             //Se a escolha anterior for a mesma que a atual
             formList.add(dCanvas.getForm());
+            scaleBtnX.setDisable(false);
+            scaleBtnY.setDisable(false);
             //list.getSelectionModel().select(formList.size() - 1);
             dCanvas.clearSelection();
             if (this.prevChoice == this.choice) {
-                dCanvas.AddForm(this.choice);//continuar adicionando
+                dCanvas.addForm(this.choice);//continuar adicionando
                 manualBtn.setDisable(false);//reabilitar botão de entrada manual
             } else {
                 manualBtn.setDisable(true);//desabilitar botão de entrada manual                

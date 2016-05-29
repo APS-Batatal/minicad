@@ -83,7 +83,7 @@ public class DrawingCanvas {
         this.color = color;
     }
 
-    public void AddForm(EForms form) {
+    public void addForm(EForms form) {
         //this.drawList.add(form);
         if (this.choice == form) {
             return;
@@ -114,6 +114,10 @@ public class DrawingCanvas {
         }
     }
 
+    public void removeForm(int index) {
+        this.drawList.remove(index);
+    }
+
     public void setPosition(Point p) {
         this.x = p.x;
         this.y = p.y;
@@ -137,9 +141,7 @@ public class DrawingCanvas {
 
     public void setPoints(ArrayList<Point> points) {
         if (this.actualForm != null) {
-            for (Point point : points) {
-                this.actualForm.AddPoint(point);
-            }
+            this.actualForm.AddPoint(points);
             //create();
         }
     }
@@ -149,7 +151,7 @@ public class DrawingCanvas {
         this.nPoints = this.formPoints;
     }
 
-    private void create() {
+    public void create() {
         if (actualForm != null) {
             actualForm.color = this.color;
             actualForm.setPlot();

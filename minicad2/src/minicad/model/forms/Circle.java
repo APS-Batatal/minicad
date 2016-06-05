@@ -32,15 +32,15 @@ public class Circle extends Form {
     @Override
     public void setPlot() {
         this.clear();
-        
+
         Point p1 = this.points.get(0);
         Point p4 = this.points.get(1);
-        
+
         double r = Point.distance(p4, p1);
         double x = -r, y = 0, err = 2 - 2 * r;//II. Quadrant
-        
-        this.plotPoints.addAll(this.findLine(p1, p4));
-        
+
+        //this.plotPoints.addAll(this.findLine(p1, p4));
+
         do {
             this.plotPoints.add(new Point(p1.x - x, p1.y + y));//I. Quadrant
             this.plotPoints.add(new Point(p1.x - y, p1.y - x));//II. Quadrant
@@ -61,11 +61,10 @@ public class Circle extends Form {
         //TODO: Arrumar
         //super.scale(side, factor);
         this.clear();
-        
+
         Point p1 = this.points.get(0);
         Point p4 = this.points.get(1);
-        p4.x *= factor;
-        double r = Point.distance(p4, p1);
+        double r = Point.distance(p4, p1) * factor;
         double x = -r, y = 0, err = 2 - 2 * r;//II. Quadrant
         this.plotPoints.addAll(this.findLine(p1, p4));
         do {
